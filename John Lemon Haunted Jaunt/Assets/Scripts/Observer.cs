@@ -7,6 +7,8 @@ public class Observer : MonoBehaviour
     public Transform player;
     public GameEnding gameEnding;
     bool m_IsPlayerInRange;
+    public Health h;
+    //public Canvas playUI;
     
     void Update ()
     {
@@ -19,10 +21,17 @@ public class Observer : MonoBehaviour
             {
                 if(raycastHit.collider.transform == player)
                 {
-                    gameEnding.CaughtPlayer();
+                    //gameEnding.CaughtPlayer();//call healthDeplete here
+                    h.inTrouble=true;
+                    if(h.hp<=0){
+                        gameEnding.CaughtPlayer();
+                        //playUI.enabled=false;
+                    }
                 }
+                
             }
         }
+        
     }
 
     void OnTriggerEnter (Collider other)
@@ -39,6 +48,7 @@ public class Observer : MonoBehaviour
         if(other.transform == player)
         {
             m_IsPlayerInRange = false;
+            h.inTrouble=false;
         }
     }
 }
